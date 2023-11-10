@@ -13,22 +13,34 @@ provider "azurerm" {
   features {}
 }
 
-resource "azurerm_resource_group" "rg" {
-  name     = "sss"
-  location = "westus2"
+module "rg" {
+  source = "./module/azure_rm_resource"
+  rgcount = 3
+  rg_name-startswith = "test_ut1"
 }
+
+module "test_dv1" {
+  source = "./module/azure_rm_resource"
+  rgcount = 1
+  rg_name-startswith = "test_dv1"
+
+}
+# resource "azurerm_resource_group" "rg" {
+#   name     = "sss"
+#   location = "westus2"
+# }
 
 resource "azurerm_virtual_network" "vnet" {
   address_space       = ["10.0.0.0/22"]
-  resource_group_name = azurerm_resource_group.rg.name
+  resource_group_name = module.rg.rg_names[0]
   name                = "myvent"
-  depends_on          = [azurerm_resource_group.rg]
-  location            = azurerm_resource_group.rg.location
+  depends_on          = [module.rg]
+  location            = module.rg.rg_location
 }
 
 resource "azurerm_subnet" "subnet" {
   address_prefixes = ["10.0.0.0/24"]
   name = "sub1"
-  resource_group_name = azurerm_resource_group.rg.name
+  resource_group_name = module.rg.rg_names[0]
   virtual_network_name = azurerm_virtual_network.vnet.name
 }
