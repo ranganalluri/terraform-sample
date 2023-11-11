@@ -27,11 +27,18 @@ stages:
               backendAzureRmContainerName: 'terraform'
               backendAzureRmKey: 'terraform.tfstate'
           - task: TerraformTaskV4@4
+            displayName: Terraform Plan
             inputs:
               provider: 'azurerm'
               command: 'plan'
               environmentServiceNameAzureRM: 'Visual Studio Professional with MSDN(c4e74058-4994-4f0f-865e-de488376ac75)'
-                      
+        
+          - task: TerraformTaskV4@4
+            displayName: Apply
+            inputs:
+              provider: 'azurerm'
+              command: 'apply'
+              environmentServiceNameAzureRM: 'Visual Studio Professional with MSDN(c4e74058-4994-4f0f-865e-de488376ac75)'
     
       
         
