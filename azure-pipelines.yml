@@ -3,7 +3,10 @@ trigger: none
 pool:
   vmImage: ubuntu-latest
 variables:
-  test: 'dd'
+  bkstrgrg: 'test'
+  bkstrg: 'xy123498'
+  bkcontainer : 'terraform'
+  bkstrgkey : 'terraform.tfstate'
 
 stages:
   - stage: A
