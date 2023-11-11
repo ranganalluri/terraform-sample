@@ -1,0 +1,47 @@
+trigger: none
+
+pool:
+  vmImage: ubuntu-latest
+variables:
+  bkstrgrg: 'test'
+  bkstrg: 'xy123498'
+  bkcontainer : 'terraform'
+  bkstrgkey : 'terraform.tfstate'
+
+stages:
+  - stage: TerraformStageOne
+    jobs:
+      - job: validate
+        continueOnError: false
+        steps:
+          - task: TerraformInstaller@1
+            displayName: install terraform
+            inputs:
+              terraformVersion: 'latest'
+
+          - task: TerraformTaskV4@4
+            displayName: terrafor init
+            inputs:
+              provider: 'azurerm'
+              command: 'init'
+              backendServiceArm: 'Visual Studio Professional with MSDN(c4e74058-4994-4f0f-865e-de488376ac75)'
+              backendAzureRmResourceGroupName: $(bkstrgrg)
+              backendAzureRmStorageAccountName: 'xy123498'
+              backendAzureRmContainerName: 'terraform'
+              backendAzureRmKey: 'terraform.tfstate'
+          - task: TerraformTaskV4@4
+            displayName: Terraform Plan
+            inputs:
+              provider: 'azurerm'
+              command: 'plan'
+              environmentServiceNameAzureRM: 'Visual Studio Professional with MSDN(c4e74058-4994-4f0f-865e-de488376ac75)'
+        
+          - task: TerraformTaskV4@4
+            displayName: Apply
+            inputs:
+              provider: 'azurerm'
+              command: 'apply'
+              environmentServiceNameAzureRM: 'Visual Studio Professional with MSDN(c4e74058-4994-4f0f-865e-de488376ac75)'
+    
+      
+        
