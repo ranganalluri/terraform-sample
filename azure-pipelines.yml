@@ -26,6 +26,11 @@ stages:
               backendAzureRmStorageAccountName: 'xy123498'
               backendAzureRmContainerName: 'terraform'
               backendAzureRmKey: 'terraform.tfstate'
+          - task: TerraformTaskV4@4
+            inputs:
+              provider: 'azurerm'
+              command: 'plan'
+              environmentServiceNameAzureRM: 'Visual Studio Professional with MSDN(c4e74058-4994-4f0f-865e-de488376ac75)'
                       
     
       
