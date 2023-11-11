@@ -9,7 +9,7 @@ variables:
   bkstrgkey : 'terraform.tfstate'
 
 stages:
-  - stage: A
+  - stage: Terraform Stage One
     jobs:
       - job: validate
         continueOnError: false
