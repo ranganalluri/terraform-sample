@@ -9,9 +9,9 @@ variables:
   bkstrgkey : 'terraform.tfstate'
 
 stages:
-  - stage: TerraformStageOne
-    jobs:
-      - job: TerraForminit
+  - stage: 'Terraform Stage One'
+    jobs: 
+      - job: 'TerraForm init'
         continueOnError: false
         steps:
           - task: TerraformInstaller@1
