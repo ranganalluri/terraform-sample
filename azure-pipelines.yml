@@ -2,8 +2,8 @@ trigger: none
 pool:
   vmImage: ubuntu-latest
 variables:
-  test:'dd'
-  
+  test: 'dd'
+
 stages:
   - stage: A
     jobs:
@@ -11,6 +11,7 @@ stages:
         continueOnError: false
         steps:
           - task: TerraformInstaller@1
+            displayName: install terraform
             inputs:
               terraformVersion: 'latest'
     
