@@ -11,7 +11,8 @@ stages:
       - job: 'TerraForminit'
         continueOnError: false
         steps:
-          - script: echo $(terraform_dev)
+          - script: echo $(bkstrgkey)
+            displayName: Print variables
             
           - task: TerraformInstaller@1
             displayName: install terraform
