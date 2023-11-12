@@ -9,7 +9,7 @@ variables:
   bkstrgkey : 'terraform.tfstate'
 
 stages:
-  - stage: 'Terraform Stage One'
+  - stage: 'TerraformStageDev'
     jobs: 
       - job: 'TerraForm init'
         continueOnError: false
@@ -45,5 +45,37 @@ stages:
               command: 'apply'
               environmentServiceNameAzureRM: 'Visual Studio Professional with MSDN(c4e74058-4994-4f0f-865e-de488376ac75)'
     
-      
+  - stage: 'TerraformStageProd'
+    condition: succeeded()
+    dependsOn: TerraformStageDev
+    displayName: 'Terraform Stage Prod'
+    jobs:
+      - job: 
+        variables:
+          bkstrgrg: 'test'
+          bkstrg: 'xy123498'
+          bkcontainer : 'terraform'
+          bkstrgkey : 'terraform.tfstate.prod'
+        steps:
+          - task: TerraformInstaller@1
+            inputs:
+              terraformVersion: 'latest'
+          - task: TerraformTaskV4@4
+            inputs:
+              provider: 'azurerm'
+              command: 'init'
+              backendServiceArm: 'Visual Studio Professional with MSDN(c4e74058-4994-4f0f-865e-de488376ac75)'
+              backendAzureRmResourceGroupName: 'test'
+              backendAzureRmStorageAccountName: 'xy123498'
+              backendAzureRmContainerName: 'terraform'
+              backendAzureRmKey: 'terraform.tfstate.prod'
+          - task: TerraformTaskV4@4
+            inputs:
+              provider: 'azurerm'
+              command: 'plan'
+              environmentServiceNameAzureRM: 'Visual Studio Professional with MSDN(c4e74058-4994-4f0f-865e-de488376ac75)'
+          
+
+
+    
         
