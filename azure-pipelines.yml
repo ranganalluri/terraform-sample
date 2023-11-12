@@ -3,10 +3,7 @@ trigger: none
 pool:
   vmImage: ubuntu-latest
 variables:
-  bkstrgrg: 'test'
-  bkstrg: 'xy123498'
-  bkcontainer : 'terraform'
-  bkstrgkey : 'terraform.tfstate'
+- group: terraform_dev 
 
 stages:
   - stage: 'TerraformStageDev'
@@ -14,6 +11,8 @@ stages:
       - job: 'TerraForminit'
         continueOnError: false
         steps:
+          - script: echo $(terraform_dev)
+            
           - task: TerraformInstaller@1
             displayName: install terraform
             inputs:
