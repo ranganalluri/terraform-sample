@@ -23,7 +23,7 @@ provider "azurerm" {
 
 module "rg" {
   source = "./module/azure_rm_resource"
-  rgcount = 3
+  rgcount = 1
   rg_name-startswith = "test_ut1"
 }
 
