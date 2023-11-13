@@ -1,0 +1,9 @@
+parameters:
+- name: firstname
+  type: string   
+
+steps:
+-  script: |
+     echo "Hello from the script task! $(firstname)" 
+   displayName: "Run Script"  
+   
